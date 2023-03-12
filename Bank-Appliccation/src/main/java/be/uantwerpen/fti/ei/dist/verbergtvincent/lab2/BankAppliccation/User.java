@@ -4,7 +4,18 @@ import java.util.ArrayList;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class User {
+
+interface UserInterface {
+    public String getId();
+    public void setName(String name);
+    public String getName();
+    public ArrayList<String> getAccounts();
+    public void addAccount(BankAccount account) throws OwnerException;
+    public void removeAccount(BankAccount account);
+    public void deposit(BankAccount ownerAccount, BankAccount targetAccount, double amount);
+    public void withdraw(BankAccount ownerAccount, BankAccount targetAccount, double amount);
+}
+public class User implements UserInterface{
     private String id = UUID.randomUUID().toString();
     private String name;
     private ArrayList<BankAccount> accounts;
@@ -30,6 +41,17 @@ public class User {
     public ArrayList<String> getAccounts() {
         return accounts.stream().map(account -> account.getId()).collect(Collectors.toCollection(ArrayList::new));
     }
+
+    @Override
+    public void addAccount(BankAccount account) throws OwnerException {
+        if (!accounts.contains(account)) {
+            accounts.add(account);
+            account.addOwner(this);
+            return;
+        }
+        throw new OwnerException("You are already owner of this account");
+    }
+    
 
     @Override
     public String toString() {
