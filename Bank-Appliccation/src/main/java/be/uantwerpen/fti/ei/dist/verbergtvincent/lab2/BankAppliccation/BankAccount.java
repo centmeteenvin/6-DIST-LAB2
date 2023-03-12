@@ -7,11 +7,11 @@ import java.util.stream.Collectors;
 
 public class BankAccount {
     private String id = UUID.randomUUID().toString();
-    private ArrayList<User> users;
+    private ArrayList<User> owners;
     private double balance;
 
      public BankAccount() {
-        this.users = new ArrayList<User>();
+        this.owners = new ArrayList<User>();
         this.balance = 0;
     }
 
@@ -23,7 +23,12 @@ public class BankAccount {
         return balance;
     }
 
-    public ArrayList<String> getUsers() {
-        return users.stream().map(user -> user.getId()).collect(Collectors.toCollection(ArrayList::new));
+    public ArrayList<String> getOwners() {
+        return owners.stream().map(User::getId).collect(Collectors.toCollection(ArrayList::new));
     }
+    @Override
+    public String toString() {
+        return "BankAccount(id= " + this.id + ", balance= " + this.balance + " owners= " + this.owners.stream().map(User::getId).collect(Collectors.toList()) + ")";
+    }
+    
 }

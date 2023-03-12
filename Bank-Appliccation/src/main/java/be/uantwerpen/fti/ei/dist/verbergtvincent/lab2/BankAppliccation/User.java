@@ -30,4 +30,10 @@ public class User {
     public ArrayList<String> getAccounts() {
         return accounts.stream().map(account -> account.getId()).collect(Collectors.toCollection(ArrayList::new));
     }
+
+    @Override
+    public String toString() {
+        return "BankAccount(id= " + this.id + ", name= " + this.name + " accounts= " + this.accounts.stream().map(BankAccount::getId).collect(Collectors.toList()) + ")";
+    }
+
 }
