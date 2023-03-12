@@ -25,14 +25,14 @@ public class BankAccount implements BankAccountInterface {
         this.balance = 0;
     }
 
-//    @Override
-//    public void addOwner(User owner) throws OwnerException {
-//        if (!owners.contains(owner)) {
-//            owners.add(owner);
-//            return;
-//        }
-//        throw new OwnerException("User is already owner of this account");
-//    }
+    @Override
+    public void addOwner(User owner) throws OwnerException {
+        if (!owners.contains(owner)) {
+            owners.add(owner);
+            return;
+        }
+        throw new OwnerException("User is already owner of this account");
+    }
 
     public String getId() {
         return id;
