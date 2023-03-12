@@ -13,7 +13,7 @@ interface UserInterface {
     public void addAccount(BankAccount account) throws OwnerException;
     public void removeAccount(BankAccount account) throws OwnerException;
     public void deposit(BankAccount ownerAccount, BankAccount targetAccount, double amount) throws InsufficientFundsException, OwnerException;
-    public void withdraw(BankAccount ownerAccount, BankAccount targetAccount, double amount);
+    public void withdraw(BankAccount ownerAccount, BankAccount targetAccount, double amount) throws InsufficientFundsException, OwnerException;
 }
 public class User implements UserInterface{
     private String id = UUID.randomUUID().toString();
@@ -66,6 +66,15 @@ public class User implements UserInterface{
     public void deposit(BankAccount ownerAccount, BankAccount targetAccount, double amount) throws InsufficientFundsException, OwnerException {
         if (this.accounts.contains(ownerAccount)) {
             ownerAccount.deposit(targetAccount, amount);
+            return;
+        }
+        throw new OwnerException("You don't own this account");
+    }
+
+    @Override
+    public void withdraw(BankAccount ownerAccount, BankAccount targetAccount, double amount) throws InsufficientFundsException, OwnerException {
+        if (this.accounts.contains(ownerAccount)) {
+            ownerAccount.withdraw(targetAccount, amount);
             return;
         }
         throw new OwnerException("You don't own this account");
