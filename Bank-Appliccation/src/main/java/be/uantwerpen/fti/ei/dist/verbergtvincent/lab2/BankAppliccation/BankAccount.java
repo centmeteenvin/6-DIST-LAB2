@@ -9,7 +9,7 @@ interface BankAccountInterface {
     public void addOwner(User owner) throws OwnerException;
     public void removeOwner(User owner) throws OwnerException;
     public void deposit(BankAccount account, double amount) throws InsufficientFundsException;
-    public void withdraw(BankAccount account, double amount);
+    public void withdraw(BankAccount account, double amount) throws InsufficientFundsException;
     public String getId();
     public double getBalance();
     public ArrayList<String> getOwners();
@@ -48,6 +48,16 @@ public class BankAccount implements BankAccountInterface {
          if (this.balance >= amount) {
              this.balance -= amount;
              account.balance += amount;
+             return;
+         }
+         throw new InsufficientFundsException("The account you are withdrawing from does not have the sufficient funds");
+    }
+
+    @Override
+    public void withdraw(BankAccount account, double amount) throws InsufficientFundsException {
+         if (account.balance >= amount) {
+             account.balance -= amount;
+             this.balance += amount;
              return;
          }
          throw new InsufficientFundsException("The account you are withdrawing from does not have the sufficient funds");
