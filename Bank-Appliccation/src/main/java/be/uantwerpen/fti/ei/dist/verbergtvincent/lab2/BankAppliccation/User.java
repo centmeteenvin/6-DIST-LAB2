@@ -11,7 +11,7 @@ interface UserInterface {
     public String getName();
     public ArrayList<String> getAccounts();
     public void addAccount(BankAccount account) throws OwnerException;
-    public void removeAccount(BankAccount account);
+    public void removeAccount(BankAccount account) throws OwnerException;
     public void deposit(BankAccount ownerAccount, BankAccount targetAccount, double amount);
     public void withdraw(BankAccount ownerAccount, BankAccount targetAccount, double amount);
 }
@@ -51,7 +51,16 @@ public class User implements UserInterface{
         }
         throw new OwnerException("You are already owner of this account");
     }
-    
+
+    @Override
+    public void removeAccount(BankAccount account) throws OwnerException {
+        if (accounts.contains(account)) {
+            accounts.remove(account);
+            account.removeOwner(this);
+            return;
+        }
+        throw new OwnerException("You don't own this account");
+    }   
 
     @Override
     public String toString() {
