@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 interface BankAccountInterface {
     public void addOwner(User owner) throws OwnerException;
     public void removeOwner(User owner) throws OwnerException;
-    public void deposit(BankAccount account);
-    public void withdraw(BankAccount account);
+    public void deposit(BankAccount account, double amount) throws InsufficientFundsException;
+    public void withdraw(BankAccount account, double amount);
     public String getId();
     public double getBalance();
     public ArrayList<String> getOwners();
@@ -43,7 +43,15 @@ public class BankAccount implements BankAccountInterface {
         throw new OwnerException("User is not an owner of this account");
     }
 
-
+    @Override
+    public void deposit(BankAccount account, double amount) throws InsufficientFundsException {
+         if (this.balance >= amount) {
+             this.balance -= amount;
+             account.balance += amount;
+             return;
+         }
+         throw new InsufficientFundsException("The account you are withdrawing from does not have the sufficient funds");
+    }
 
     public String getId() {
         return id;
