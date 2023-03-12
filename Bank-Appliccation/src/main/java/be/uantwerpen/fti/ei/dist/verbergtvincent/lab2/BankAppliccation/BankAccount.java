@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 interface BankAccountInterface {
     public void addOwner(User owner) throws OwnerException;
-    public void removeOwner(User owner);
+    public void removeOwner(User owner) throws OwnerException;
     public void deposit(BankAccount account);
     public void withdraw(BankAccount account);
     public String getId();
@@ -33,6 +33,17 @@ public class BankAccount implements BankAccountInterface {
         }
         throw new OwnerException("User is already owner of this account");
     }
+
+    @Override
+    public void removeOwner(User owner) throws OwnerException {
+        if (owners.contains(owner)) {
+            owners.remove(owner);
+            return;
+        }
+        throw new OwnerException("User is not an owner of this account");
+    }
+
+
 
     public String getId() {
         return id;
