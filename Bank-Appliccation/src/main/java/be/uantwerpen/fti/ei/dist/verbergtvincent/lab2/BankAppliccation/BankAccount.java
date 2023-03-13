@@ -18,7 +18,7 @@ interface BankAccountInterface {
 public class BankAccount implements BankAccountInterface {
     private String id = UUID.randomUUID().toString();
     private ArrayList<User> owners;
-    private double balance;
+    protected double balance;
 
      public BankAccount() {
         this.owners = new ArrayList<User>();
@@ -79,4 +79,14 @@ public class BankAccount implements BankAccountInterface {
         return "BankAccount(id= " + this.id + ", balance= " + this.balance + " owners= " + this.owners.stream().map(User::getId).collect(Collectors.toList()) + ")";
     }
 
+}
+
+class InfiniteBankAccount extends BankAccount {
+
+    InfiniteBankAccount() {
+        super();
+    }
+    public void setBalance( double amount) {
+        super.balance = amount;
+    }
 }
