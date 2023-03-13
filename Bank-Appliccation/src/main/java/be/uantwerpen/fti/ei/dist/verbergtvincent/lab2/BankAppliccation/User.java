@@ -20,7 +20,8 @@ public class User implements UserInterface{
     private String name;
     private ArrayList<BankAccount> accounts;
 
-
+    public User() {
+    }
     public User(String name) {
         this.name = name;
         this.accounts = new ArrayList<BankAccount>();
@@ -82,7 +83,7 @@ public class User implements UserInterface{
 
     @Override
     public String toString() {
-        return "BankAccount(id= " + this.id + ", name= " + this.name + " accounts= " + this.accounts.stream().map(BankAccount::getId).collect(Collectors.toList()) + ")";
+        return "User(id= " + this.id + ", name= " + this.name + " accounts= " + this.accounts.stream().map(BankAccount::getId).collect(Collectors.toList()) + ")";
     }
 
 }
